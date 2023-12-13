@@ -8,6 +8,7 @@ import { dateFormateDbToView } from "../../../Utils/stringFunctions";
 // importa a biblioteca de tootips ()
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip } from "react-tooltip";
+import { Link } from "react-router-dom";
 
 // import trashDelete from "../../../assets/images/trash-delete.svg";
 
@@ -37,66 +38,69 @@ const Table = ({ dados, fnDelete = null, fnUpdate = null }) => {
           </th>
         </tr>
       </thead>
+
       <tbody>
         {dados.map((tp) => {
           return (
-            <tr className="table-data__head-row" key={tp.idEvento}>
-              <td className="table-data__data table-data__data--big">
-                {tp.nomeEvento}
-              </td>
-              <td
-                className="table-data__data table-data__data--big table-data__data--handover"
-                data-tooltip-id="description-tooltip"
-                data-tooltip-content={tp.descricao}
-                data-tooltip-place="top"
-              >
-                {tp.descricao.substr(0, 15)} ...
-                <Tooltip
-                  id="description-tooltip"
-                  className="custom-tootip"
-                />
-              </td>
-              <td className="table-data__data table-data__data--big">
-                {tp.tiposEvento.titulo}
-              </td>
-              <td className="table-data__data table-data__data--big">
-                {dateFormateDbToView(tp.dataEvento)}
-              </td>
+            <Link to="/descricoes-evento" state={tp.idEvento}>
+              <tr className="table-data__head-row" key={tp.idEvento}>
+                <td className="table-data__data table-data__data--big">
+                  {tp.nomeEvento}
+                </td>
+                <td
+                  className="table-data__data table-data__data--big table-data__data--handover"
+                  data-tooltip-id="description-tooltip"
+                  data-tooltip-content={tp.descricao}
+                  data-tooltip-place="top"
+                >
+                  {tp.descricao.substr(0, 15)} ...
+                  <Tooltip
+                    id="description-tooltip"
+                    className="custom-tootip"
+                  />
+                </td>
+                <td className="table-data__data table-data__data--big">
+                  {tp.tiposEvento.titulo}
+                </td>
+                <td className="table-data__data table-data__data--big">
+                  {dateFormateDbToView(tp.dataEvento)}
+                </td>
 
-              <td className="table-data__data table-data__data--little">
-                <img
-                  className="table-data__icon"
-                  idevento={tp.idEvento}
-                  src={editPen}
-                  alt=""
-                  onClick={(e) =>
-                    // dá pra passar o obhjeto tp direto?
-                    fnUpdate({//showUpdateForma(??)
-                      idEvento: tp.idEvento,
-                      nomeEvento: tp.nomeEvento,
-                      dataEvento: tp.dataEvento,
-                      descricao: tp.descricao,
-                      idInstituicao: tp.idInstituicao, //por enquanto chumbado
-                      idTipoEvento: tp.idTipoEvento
-                    })
-                  }
-                />
-              </td>
+                <td className="table-data__data table-data__data--little">
+                  <img
+                    className="table-data__icon"
+                    idevento={tp.idEvento}
+                    src={editPen}
+                    alt=""
+                    onClick={(e) =>
+                      // dá pra passar o obhjeto tp direto?
+                      fnUpdate({//showUpdateForma(??)
+                        idEvento: tp.idEvento,
+                        nomeEvento: tp.nomeEvento,
+                        dataEvento: tp.dataEvento,
+                        descricao: tp.descricao,
+                        idInstituicao: tp.idInstituicao, //por enquanto chumbado
+                        idTipoEvento: tp.idTipoEvento
+                      })
+                    }
+                  />
+                </td>
 
-              <td className="table-data__data table-data__data--little">
-                <img
-                  className="table-data__icon"
-                  idevento={tp.idEvento}
-                  src={trashDelete}
-                  alt=""
-                  onClick={(e) => fnDelete(e.target.getAttribute("idevento"))}
-                />
-              </td>
-            </tr>
+                <td className="table-data__data table-data__data--little">
+                  <img
+                    className="table-data__icon"
+                    idevento={tp.idEvento}
+                    src={trashDelete}
+                    alt=""
+                    onClick={(e) => fnDelete(e.target.getAttribute("idevento"))}
+                  />
+                </td>
+              </tr>
+            </Link>
           );
         })}
       </tbody>
-    </table>
+    </table >
   );
 };
 
