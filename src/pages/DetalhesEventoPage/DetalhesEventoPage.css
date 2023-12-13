@@ -1,0 +1,29 @@
+/* Exibição dos dados do evento */
+
+.detalhes-evento-section{
+    /* background-color: red; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    
+    border-left: 2px solid #B51D44;
+
+    padding-top: 20px;
+    padding-left: 20px;
+    margin-top: 50px;
+    justify-self: start;
+    top: 0;
+}
+
+.detalhes-evento-section .title{
+    text-align: left !important;
+}
+
+.detalhes-evento-section p {
+    margin-bottom: 20px;
+}
+
+/* Comentários */
+/* .comments-evento-section hr {
+} */

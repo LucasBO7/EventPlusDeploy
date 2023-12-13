@@ -42,7 +42,7 @@ const Table = ({ dados, fnDelete = null, fnUpdate = null }) => {
       <tbody>
         {dados.map((tp) => {
           return (
-            <Link to="/descricoes-evento" state={tp.idEvento}>
+            <Link id="events-table-row" to="/detalhes-evento" state={tp}>
               <tr className="table-data__head-row" key={tp.idEvento}>
                 <td className="table-data__data table-data__data--big">
                   {tp.nomeEvento}

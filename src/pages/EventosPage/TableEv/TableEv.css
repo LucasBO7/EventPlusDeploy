@@ -20,6 +20,11 @@
     color: #B51D44 !important;
     background-color: #fff !important;
   }
+
+  #events-table-row{
+    text-decoration: none;
+    color: var(--color-white);
+  }
   
   /* Smartphone */
   .table-data {
