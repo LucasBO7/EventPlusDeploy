@@ -38,6 +38,7 @@ export const institutionResource = "/Instituicao";
  */
 export const loginResource = "/Login";
 
+
 // const apiPort = '5000';
 // const localApiUri = `http://localhost:${apiPort}/api`;
 const externallApiUri = `https://eventlucas.azurewebsites.net/api`;
