@@ -27,8 +27,13 @@ export default function DescricoesEventoPage() {
         const promise = await api.get(
           `/ComentariosEvento?id=${state.idEvento}`
         );
+<<<<<<< HEAD
         const commentariesGet = promise.data;
         setCommentaries(commentariesGet);
+=======
+        setCommentaries(promise.data);
+        console.log("Comentários do evento: " + commentaries + " | Nome do evento: " + state.nomeEvento);
+>>>>>>> 4e3d4727b10872fefe386ba15d206d91870bc12c
       }
       if (userData.role === "Comum") {
         // Mostrar os comentários permitidos pela IA do Content Moderator
@@ -40,8 +45,12 @@ export default function DescricoesEventoPage() {
     }
     
     getEventComments();
+<<<<<<< HEAD
     setShowSpinner(false);
   }, [userData]);
+=======
+  }, [userData, commentaries]);
+>>>>>>> 4e3d4727b10872fefe386ba15d206d91870bc12c
 
   return (
     <>
