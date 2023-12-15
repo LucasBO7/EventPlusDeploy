@@ -4,6 +4,7 @@ import { dateFormateDbToView } from "../../../Utils/stringFunctions";
 import ToggleSwitch from "../../../components/Toggle/Toggle";
 // importa a biblioteca de tootips ()
 import "react-tooltip/dist/react-tooltip.css";
+import { Link } from "react-router-dom";
 // import { Tooltip } from "react-tooltip";
 
 // import trashDelete from "../../../assets/images/trash-delete.svg";
@@ -29,9 +30,11 @@ const Table = ({ dados, fnConnect = null, fnShowModal = null }) => {
         {dados.map((e) => {
           return (
             <tr className="tbal-data__head-row" key={Math.random()}>
-              <td className="tbal-data__data tbal-data__data--big">
-                {e.nomeEvento}
-              </td>
+              <Link id="events-table-row" className="tbal-data__data tbal-data__data--big" to="/detalhes-evento" state={e}>
+                <td className="tbal-data__data tbal-data__data--big">
+                  {e.nomeEvento}
+                </td>
+              </Link>
 
               <td className="tbal-data__data tbal-data__data--big tbal-data__btn-actions">
                 {/* {e.dataEvento} */}

@@ -1,5 +1,17 @@
 /* Exibição dos dados do evento */
 
+.cadastro-evento-section a {
+    color: black;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.cadastro-evento-section a:hover {
+    color: #B51D44;
+    cursor: pointer;
+    border-bottom: 2px solid #B51D44;
+}
+
 .detalhes-evento-section{
     /* background-color: red; */
     display: flex;
@@ -23,7 +35,3 @@
 .detalhes-evento-section p {
     margin-bottom: 20px;
 }
-
-/* Comentários */
-/* .comments-evento-section hr {
-} */

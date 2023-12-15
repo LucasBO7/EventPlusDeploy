@@ -20,6 +20,11 @@
     color: #B51D44 !important;
     background-color: #fff !important;
   }
+
+  #events-table-row{
+    text-decoration: none;
+    color: var(--color-black) !important;
+  }
   
   /* Smartphone */
   .tbal-data {
@@ -98,6 +103,10 @@
     justify-content: center;
     align-items: baseline;
     gap: 8px;
+  }
+
+  #events-table-row {
+    text-decoration: none;
   }
   
   @media screen and (min-width: 992px) {

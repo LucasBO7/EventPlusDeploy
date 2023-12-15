@@ -5,6 +5,7 @@ import Table from "./TableEvA/TableEvA";
 import Container from "../../components/Container/Container";
 import { Select } from "../../components/FormComponents/FormComponents";
 import Spinner from "../../components/Spinner/Spinner";
+import Notification from "../../components/Notification/Notification";
 import Modal from "../../components/Modal/Modal";
 import api, {
   eventsResource,
@@ -37,6 +38,8 @@ const EventosAlunoPage = () => {
   const [idEvento, setIdEvento] = useState("");
   const [idComentario, setIdComentario] = useState(null);
 
+  const [notifyUser, setNotifyUser] = useState({}); //Componente Notification
+
   useEffect(() => {
     loadEventsType();
   }, [tipoEvento, userData.userId]); //
@@ -58,21 +61,15 @@ const EventosAlunoPage = () => {
         );
 
         setEventos(eventosMarcados);
-
-        // console.clear();
-
-        // console.log("TODOS OS EVENTOS");
-        // console.log(todosEventos.data);
-
-        // console.log("MEUS EVENTOS");
-        // console.log(meusEventos.data);
-
-        // console.log("EVENTOS MARCADOSSSS:");
-        // console.log(eventosMarcados);
       } catch (error) {
-        //colocar o notification
-        console.log("Erro na API");
-        console.log(error);
+        setNotifyUser({
+          titleNote: "Erro",
+          textNote: `Houve um erro!!: ${error}`,
+          imgIcon: "danger",
+          imgAlt:
+            "Imagem de ilustração de sucesso. Moça segurando um balão com símbolo de confirmação ok.",
+          showMessage: true,
+        });
       }
     } else if (tipoEvento === "2") {
       /**
@@ -100,9 +97,14 @@ const EventosAlunoPage = () => {
         // console.log(arrEventos);
         setEventos(arrEventos);
       } catch (error) {
-        //colocar o notification
-        console.log("Erro na API");
-        console.log(error);
+        setNotifyUser({
+          titleNote: "Erro",
+          textNote: `Houve um erro!!: ${error}`,
+          imgIcon: "danger",
+          imgAlt:
+            "Imagem de ilustração de sucesso. Moça segurando um balão com símbolo de confirmação ok.",
+          showMessage: true,
+        });
       }
     } else {
       setEventos([]);
@@ -150,7 +152,7 @@ const EventosAlunoPage = () => {
     try {
       // api está retornando sempre todos os comentários do usuário
       const promise = await api.get(
-        `${commentaryEventResource}?idUsuario=${idUsuario}&idEvento=${idEvento}`
+        `${commentaryEventResource}?&id=${idEvento}`
       );
 
       const myComm = await promise.data.filter(
@@ -164,27 +166,45 @@ const EventosAlunoPage = () => {
       setComentario(myComm.length > 0 ? myComm[0].descricao : "");
       setIdComentario(myComm.length > 0 ? myComm[0].idComentarioEvento : null);
     } catch (error) {
-      console.log("Erro ao carregar o evento");
-      console.log(error);
+      setNotifyUser({
+        titleNote: "Erro",
+        textNote: `Houve um erro!!: ${error}`,
+        imgIcon: "danger",
+        imgAlt:
+          "Imagem de ilustração de sucesso. Moça segurando um balão com símbolo de confirmação ok.",
+        showMessage: true,
+      });
     }
   };
 
   // cadastrar um comentário = post
   const postMyCommentary = async (descricao, idUsuario, idEvento) => {
     try {
-      const promise = await api.post(commentaryEventResource, {
+      const promise = await api.post(`${commentaryEventResource}/CadastroIA`, {
         descricao: descricao,
-        exibe: true,
         idUsuario: idUsuario,
         idEvento: idEvento,
       });
 
       if (promise.status === 200) {
-        alert("Comentário cadastrado com sucesso");
+        setNotifyUser({
+          titleNote: "Sucesso",
+          textNote: `Comentário cadastrado com sucesso!`,
+          imgIcon: "success",
+          imgAlt:
+            "Imagem de ilustração de sucesso. Moça segurando um balão com símbolo de confirmação ok.",
+          showMessage: true,
+        });
       }
     } catch (error) {
-      console.log("Erro ao cadastrar o evento");
-      console.log(error);
+      setNotifyUser({
+        titleNote: "Erro",
+        textNote: `Deu ruim ao cadastrar!!: ${error}`,
+        imgIcon: "danger",
+        imgAlt:
+          "Imagem de ilustração de sucesso. Moça segurando um balão com símbolo de confirmação ok.",
+        showMessage: true,
+      });
     }
   };
 
@@ -197,11 +217,24 @@ const EventosAlunoPage = () => {
         `${commentaryEventResource}/${idComentario}`
       );
       if (promise.status === 200) {
-        alert("Evento excluído com sucesso!");
+        setNotifyUser({
+          titleNote: "Sucesso",
+          textNote: `Evento excluído com sucesso!`,
+          imgIcon: "success",
+          imgAlt:
+            "Imagem de ilustração de sucesso. Moça segurando um balão com símbolo de confirmação ok.",
+          showMessage: true,
+        });
       }
     } catch (error) {
-      console.log("Erro ao excluir ");
-      console.log(error);
+      setNotifyUser({
+        titleNote: "Erro",
+        textNote: `Houve um erro!!: ${error}`,
+        imgIcon: "danger",
+        imgAlt:
+          "Imagem de ilustração de sucesso. Moça segurando um balão com símbolo de confirmação ok.",
+        showMessage: true,
+      });
     }
   };
 
@@ -217,7 +250,14 @@ const EventosAlunoPage = () => {
 
         if (promise.status === 201) {
           loadEventsType();
-          alert("Presença confirmada, parabéns");
+          setNotifyUser({
+            titleNote: "Sucesso",
+            textNote: `Presença confirmada com sucesso!`,
+            imgIcon: "success",
+            imgAlt:
+              "Imagem de ilustração de sucesso. Moça segurando um balão com símbolo de confirmação ok.",
+            showMessage: true,
+          });
         }
       } catch (error) {}
       return;
@@ -230,11 +270,26 @@ const EventosAlunoPage = () => {
       );
       if (unconnected.status === 204) {
         loadEventsType();
-        alert("Desconectado do evento");
+        setNotifyUser({
+          titleNote: "Sucesso",
+          textNote: `Desconectado do evento!`,
+          imgIcon: "success",
+          imgAlt:
+            "Imagem de ilustração de sucesso. Moça segurando um balão com símbolo de confirmação ok.",
+          showMessage: true,
+        });
       }
     } catch (error) {
-      console.log("Erro ao desconecar o usuário do evento");
-      console.log(error);
+      setNotifyUser({
+        titleNote: "Erro",
+        textNote: `Houve um erro!!: ${error}`,
+        imgIcon: "danger",
+        imgAlt:
+          "Imagem de ilustração de sucesso. Moça segurando um balão com símbolo de confirmação ok.",
+        showMessage: true,
+      });
+      // console.log("Erro ao desconecar o usuário do evento");
+      // console.log(error);
     }
   }
 
@@ -262,6 +317,9 @@ const EventosAlunoPage = () => {
       </MainContent>
       {/* SPINNER -Feito com position */}
       {showSpinner ? <Spinner /> : null}
+
+      {/* CARD NOTIFICATION */}
+      {<Notification {...notifyUser} setNotifyUser={setNotifyUser} />}
 
       {showModal ? (
         <Modal

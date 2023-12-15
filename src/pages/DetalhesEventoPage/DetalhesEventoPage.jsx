@@ -5,41 +5,54 @@ import "./DetalhesEventoPage.css";
 import Title from "../../components/Title/Title";
 import { dateFormateDbToView } from "../../Utils/stringFunctions";
 import { useContext, useEffect, useState } from "react";
-import Table from "./TableComments/TableComments";
-import api, { commentaryEventResource } from "../../Services/Service";
 import { UserContext } from "../../context/AuthContext";
+import api, { commentaryEventResource } from "../../Services/Service";
+import Table from "./TableComments/TableComments";
+
+import Spinner from "../../components/Spinner/Spinner";
 
 export default function DescricoesEventoPage() {
+  const [showSpinner, setShowSpinner] = useState(false);
+
   const { state } = useLocation();
   const { userData } = useContext(UserContext);
   const [commentaries, setCommentaries] = useState([]);
 
   useEffect(() => {
+    setShowSpinner(true);
     async function getEventComments() {
+      console.log(state);
       // Mostrar todos os comentários
       if (userData.role === "Administrador") {
         const promise = await api.get(
           `/ComentariosEvento?id=${state.idEvento}`
         );
-        setCommentaries(promise.data);
-        console.log(commentaries);
+        const commentariesGet = promise.data;
+        setCommentaries(commentariesGet);
       }
       if (userData.role === "Comum") {
         // Mostrar os comentários permitidos pela IA do Content Moderator
         const promise = await api.get(
-          `${commentaryEventResource}/ListarSomenteExibe`
-        );
+          `${commentaryEventResource}/ListarSomenteExibe?id=${state.idEvento}`);
+        console.log(promise.data);
         setCommentaries(promise.data);
       }
     }
+    
     getEventComments();
+    setShowSpinner(false);
   }, [userData]);
 
   return (
     <>
       <MainContent>
+        {showSpinner ? <Spinner /> : null}
+
         <section className="cadastro-evento-section">
           <Container>
+            {userData.role === "Administrador" ? <a href="/eventos">Voltar</a> : <a href="/eventos-aluno">Voltar</a>}
+            
+
             {/* Impressão dos dados do evento */}
             <div>
               <Title titleText={state.nomeEvento} />
