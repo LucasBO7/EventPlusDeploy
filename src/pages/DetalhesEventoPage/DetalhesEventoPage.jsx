@@ -22,7 +22,7 @@ export default function DescricoesEventoPage() {
           `/ComentariosEvento?id=${state.idEvento}`
         );
         setCommentaries(promise.data);
-        console.log(commentaries);
+        console.log("Comentários do evento: " + commentaries + " | Nome do evento: " + state.nomeEvento);
       }
       if (userData.role === "Comum") {
         // Mostrar os comentários permitidos pela IA do Content Moderator
@@ -33,7 +33,7 @@ export default function DescricoesEventoPage() {
       }
     }
     getEventComments();
-  }, [userData]);
+  }, [userData, commentaries]);
 
   return (
     <>

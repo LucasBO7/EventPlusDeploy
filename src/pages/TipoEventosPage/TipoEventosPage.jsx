@@ -12,7 +12,7 @@ import Notification from "../../components/Notification/Notification";
 import Spinner from "../../components/Spinner/Spinner";
 
 const TipoEventosPage = () => {
-  
+
   // states
   const [frmEdit, setFrmEdit] = useState(false); //está em modo edição?
   const [titulo, setTitulo] = useState("");
@@ -26,11 +26,10 @@ const TipoEventosPage = () => {
     // define a chamada em nossa api
     async function loadEventsType() {
       setShowSpinner(true);
-      
+
       try {
         const retorno = await api.get(eventsTypeResource);
         setTipoEventos(retorno.data);
-        console.log(retorno.data);
       } catch (error) {
         console.log("Erro na api");
         console.log(error);
@@ -102,7 +101,7 @@ const TipoEventosPage = () => {
       const retorno = await api.get(`${eventsTypeResource}/${idElement}`);
       setTitulo(retorno.data.titulo);
       console.log(retorno.data);
-    } catch (error) {}
+    } catch (error) { }
     setShowSpinner(false);
   }
   // cancela a tela/ação de edição (volta para o form de cadastro)
@@ -118,11 +117,11 @@ const TipoEventosPage = () => {
 
     try {
       // atualiar na api
-     
-      const retorno = await api.put(eventsTypeResource + "/" + idEvento,{
-        titulo : titulo
+
+      const retorno = await api.put(eventsTypeResource + "/" + idEvento, {
+        titulo: titulo
       }); //o id está no state
-      
+
 
       if (retorno.status === 204) {
         setNotifyUser({
@@ -188,10 +187,10 @@ const TipoEventosPage = () => {
   return (
     <>
       {<Notification {...notifyUser} setNotifyUser={setNotifyUser} />}
-      
+
       {/* SPINNER - Feito com position */}
       {showSpinner ? <Spinner /> : null}
-      
+
       <MainContent>
         {/* formulário de cadastro do tipo do evento */}
         <section className="cadastro-evento-section">
