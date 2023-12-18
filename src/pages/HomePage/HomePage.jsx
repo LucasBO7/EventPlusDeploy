@@ -80,10 +80,7 @@ const HomePage = () => {
               return (
                 <NextEvent
                   key={e.idEvento}
-                  title={e.nomeEvento}
-                  description={e.descricao}
-                  eventDate={e.dataEvento}
-                  idEvent={e.idEvento}
+                  evento={e}
                 />
               );
             })}
@@ -93,15 +90,7 @@ const HomePage = () => {
 
           <div className="events-box">
             {previousEvents.map((e) => {
-              return (
-                <EventoAnterior
-                  key={e.idEvento}
-                  title={e.nomeEvento}
-                  description={e.descricao}
-                  eventDate={e.dataEvento}
-                  idEvent={e.idEvento}
-                />
-              );
+              return <EventoAnterior key={e.idEvento} evento={e} />;
             })}
           </div>
         </Container>
